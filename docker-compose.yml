@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: postgres_db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: poligran2025
+      POSTGRES_DB: z_camiseta
+    volumes:
+      - ./data:/var/lib/postgresql/data
