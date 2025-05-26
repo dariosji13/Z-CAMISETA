@@ -1,26 +1,32 @@
 FROM php:8.2-cli
 
-# Instala dependencias del sistema necesarias
+# Instalar dependencias del sistema necesarias para extensiones
 RUN apt-get update && apt-get install -y \
     unzip \
-    libzip-dev \
-    libicu-dev \
-    zlib1g-dev \
-    libxml2-dev \
     git \
     curl \
-    && docker-php-ext-install intl zip pdo pdo_pgsql
+    libzip-dev \
+    zlib1g-dev \
+    libicu-dev \
+    libxml2-dev \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+     # Limpiar caché de apt aquí para reducir el tamaño de la imagen
 
-# Instala Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Instalar extensiones de PHP
+RUN docker-php-ext-install intl zip pdo pdo_pgsql
 
+# Instalar Composer (desde la imagen oficial de Composer)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Crear directorio de trabajo
 WORKDIR /var/www
 
-# Copia tu código
+# Copiar todos los archivos al contenedor
 COPY . .
 
-# Instala dependencias PHP
-RUN composer install
+# Instalar dependencias del proyecto Laravel
+RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 
