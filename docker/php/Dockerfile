@@ -1,24 +1,27 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
-# Instalar dependencias del sistema
+# Instala dependencias del sistema necesarias
 RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    zip unzip curl git \
-    && docker-php-ext-install pdo pdo_pgsql
+    unzip \
+    libzip-dev \
+    libicu-dev \
+    zlib1g-dev \
+    libxml2-dev \
+    git \
+    curl \
+    && docker-php-ext-install intl zip pdo pdo_pgsql
 
-# Instalar Composer
+# Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Definir el directorio de trabajo
 WORKDIR /var/www
 
-# Copiar todo el proyecto dentro del contenedor
+# Copia tu código
 COPY . .
 
-# Instalar dependencias de Laravel
+# Instala dependencias PHP
 RUN composer install
 
-# Exponer el puerto del servidor Laravel si se ejecuta por 'php artisan serve'
-EXPOSE 8000
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
 
-CMD ["php-fpm"]
+
