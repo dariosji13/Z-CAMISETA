@@ -60,6 +60,8 @@ Proyecto web desarrollado en [Laravel](https://laravel.com/) + [Filament](https:
 5. Accede desde tu navegador:
     - [http://localhost:8000](http://localhost:8000)
     - [http://localhost:8000/admin](http://localhost:8000/admin) _(Panel de administración Filament)_
+    - User: <test@example.com>
+    - Password: password
 
 ---
 
@@ -81,9 +83,11 @@ Proyecto web desarrollado en [Laravel](https://laravel.com/) + [Filament](https:
 
 ## 👨‍💻 Autores y colaboradores
 
-- **dariosjil13**
-- **wilfranr**
-- [Tu nombre aquí]
+- **Oliver Aguilar**
+- **Maribel Arteaga**
+- **Juan Diego Escobar**
+- **Daniel Ospina**
+- **Yoseth Rivera**
 
 ---
 
