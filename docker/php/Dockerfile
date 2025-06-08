@@ -27,10 +27,13 @@ COPY composer.json composer.lock* ./
 # Copiar todos los archivos al contenedor
 COPY . .
 
-# Instalar dependencias del proyecto Laravel
+# Instalar dependencias del proyecto Larave
 #RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --verbose
 
 # Instalar dependencias y configurar permisos
+#RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist
+
+#Instalar dependencias y configurar permisos
 RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --verbose && \
     cp .env.example .env && \
     php artisan key:generate && \
