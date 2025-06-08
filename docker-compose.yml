@@ -7,12 +7,26 @@ services:
     container_name: laravel-app
     ports:
       - "8000:8000"
-    volumes:
-      - .:/var/www # Mantener este volumen para el desarrollo local
+    #volumes:
+     # - .:/var/www # Mantener este volumen para el desarrollo local
     depends_on:
       - postgres_db # Cambiado a postgres_db para coincidir con el nombre del servicio
     networks:
       - laravel
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    user: root
+    ports:
+      - "8081:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    container_name: ci_jenkins
+
 
   postgres_db: # Renombrado el servicio de 'postgres' a 'postgres_db' para mayor claridad y consistencia
     image: postgres:15 # Recomiendo usar una versión específica y más reciente si es posible, como 15 o 16. La 13 está bien, pero la 15 es más actual.
@@ -36,3 +50,4 @@ networks:
 # ¡NUEVA SECCIÓN! Definición de los volúmenes con nombre
 volumes:
   db_data: # Define el volumen con nombre 'db_data'
+  jenkins_home:
