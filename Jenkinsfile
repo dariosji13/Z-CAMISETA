@@ -1,7 +1,7 @@
 pipeline{
     agent any
     
-    enveiroment{
+    enviroment{
         DOCKER_HOST= 'unix:///var/run/docker.sock'
     }
 
