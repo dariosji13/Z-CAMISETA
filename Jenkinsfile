@@ -1,8 +1,8 @@
 pipeline{
     agent any
     
-    enviroment{
-        DOCKER_HOST= 'unix:///var/run/docker.sock'
+    environment{
+        COMPOSE_PROJECT_NAME = "ZCAMISETA-pipeline"
     }
 
     stages{
