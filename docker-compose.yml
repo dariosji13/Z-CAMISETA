@@ -15,7 +15,9 @@ services:
       - laravel
 
   jenkins:
-    image: jenkins/jenkins:lts
+    build: 
+      context: .
+      dockerfile: Dockerfile.jenkins
     user: root
     ports:
       - "8081:8080"
