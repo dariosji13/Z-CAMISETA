@@ -1,0 +1,10 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+#Intalar docker cli
+RUN apt-get update && apt-get install -y docker.io
+
+#volver a usar el usuario jenkins
+
+USER jenkins
