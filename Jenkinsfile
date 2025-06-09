@@ -1,5 +1,5 @@
 pipeline{
-    agent { label 'docker-agent'}
+    agent { label 'docker-enabled'}
     
     environment{
         COMPOSE_PROJECT_NAME = "ZCAMISETA-pipeline"
