@@ -1,5 +1,10 @@
 pipeline{
-    agent any
+    agent{
+        docker{
+            image 'docker:latest'
+            arg '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
     
     environment{
         COMPOSE_PROJECT_NAME = "ZCAMISETA-pipeline"
@@ -13,8 +18,7 @@ pipeline{
         }
         stage('contruir contenedores'){
             steps{
-                sh 'uname -r'
-                sh 'sudo apt install docker.io docker-compose -y'
+                sh 'ls -l'
                 sh 'docker --version'
                 sh 'docker compose build --no-cache'
             }
