@@ -3,7 +3,12 @@ FROM jenkins/jenkins:lts
 USER root
 
 #Intalar docker cli
-RUN apt-get update && apt-get install -y docker.io
+RUN apt-get update && \
+    apt-get install -y \
+    docker.io \
+    docker-compose \
+    curl \
+    git
 
 #volver a usar el usuario jenkins
 

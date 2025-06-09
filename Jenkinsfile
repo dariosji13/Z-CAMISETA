@@ -16,7 +16,7 @@ pipeline{
                 sh 'ls -l'
                 sh 'docker --version'
                 sh 'docker compose --version'
-                sh 'docker compose build --no-cache'
+                sh 'docker-compose build --no-cache'
             }
         }
         // stage('Verificar archivos en contenedores'){
