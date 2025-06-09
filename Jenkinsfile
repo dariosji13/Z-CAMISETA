@@ -13,6 +13,7 @@ pipeline{
         }
         stage('contruir contenedores'){
             steps{
+                sh 'ls -l'
                 sh 'docker compose build --no-cache'
             }
         }
