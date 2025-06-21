@@ -20,6 +20,9 @@ class ProductResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-c-archive-box';
 
     protected static ?string $navigationLabel = 'Productos';
+    protected static ?string $modelLabel = 'Producto';
+    protected static ?string $pluralModelLabel = 'Productos';
+
     public static function form(Form $form): Form
     {
         return $form
