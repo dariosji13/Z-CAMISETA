@@ -3,15 +3,12 @@
 namespace App\Filament\Store\Resources;
 
 use App\Filament\Store\Resources\ProductResource\Pages;
-use App\Filament\Store\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Notifications\Notification;
 
 class ProductResource extends Resource
 {
@@ -26,7 +23,7 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                //
+                // Aquí luego podemos agregar el formulario si habilitamos edición
             ]);
     }
 
@@ -34,26 +31,37 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\ImageColumn::make('image')->size(250),
+                Tables\Columns\TextColumn::make('name')->weight('bold')->wrap(),
+                Tables\Columns\TextColumn::make('price')->money('USD')->color('primary'),
             ])
             ->filters([
-                //
+                Tables\Filters\TernaryFilter::make('active')->trueLabel('Solo Activos'),
             ])
+            ->defaultSort('name')
+            ->paginated(false)
+            ->recordUrl(null)
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('add_to_cart')
+                    ->label('Agregar al carrito')
+                    ->icon('heroicon-m-shopping-cart')
+                    ->color('primary')
+                    ->action(function (Product $record) {
+                        // Aquí vamos a agregar la lógica de carrito
+                        // Por ahora sólo un debug simple:
+                        session()->push('cart', $record->id);
+                        Notification::make()
+                            ->title("{$record->name} agregado al carrito")
+                            ->success()
+                            ->send();
+                    }),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
+            ->bulkActions([]);
     }
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
@@ -63,5 +71,25 @@ class ProductResource extends Resource
             'create' => Pages\CreateProduct::route('/create'),
             'edit' => Pages\EditProduct::route('/{record}/edit'),
         ];
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit($record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false;
+    }
+
+    public static function getTableLayout(): ?string
+    {
+        return 'grid';
     }
 }

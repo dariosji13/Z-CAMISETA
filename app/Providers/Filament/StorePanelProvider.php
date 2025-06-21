@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Store\Pages\CartDetail;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -33,9 +34,12 @@ class StorePanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Store/Pages'), for: 'App\\Filament\\Store\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                CartDetail::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Store/Widgets'), for: 'App\\Filament\\Store\\Widgets')
-            ->widgets([])
+            ->widgets([
+                \App\Filament\Store\Widgets\CartWidget::class,
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
