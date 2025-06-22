@@ -5,94 +5,101 @@ Proyecto web desarrollado en [Laravel](https://laravel.com/) + [Filament](https:
 
 ---
 
-## 🚀 Características principales
+🚀 Características principales
 
-- Gestión de productos (camisetas): tallas, colores, estilos, stock, imagen, estado
-- Gestión de pedidos y clientes
-- Administración rápida y segura con Filament Admin Panel
-- Login y registro de usuarios
-- Imágenes gestionadas con almacenamiento público
-- Configuración lista para trabajar con Docker
+    Gestión de productos (camisetas): tallas, colores, estilos, stock, imagen, estado.
 
----
+    Gestión de pedidos y clientes.
 
-## 🛠️ Tecnologías usadas
+    Administración rápida y segura con Filament Admin Panel.
 
-- **PHP 8.3**
-- **Laravel 10+**
-- **Filament v3**
-- **MySQL 8**
-- **Docker & Docker Compose**
+    Login y registro de usuarios.
 
----
+    Imágenes gestionadas con almacenamiento público y sincronización para desarrollo.
 
-## 📦 Instalación rápida (desarrollo local con Docker)
+    Configuración lista para trabajar con Docker.
 
-1. Clona el repositorio:
+🛠️ Tecnologías usadas
 
-    ```bash
-    git clone https://github.com/dariosjil13/Z-CAMISETA.git
-    cd Z-CAMISETA
-    ```
+    PHP 8.3
 
-2. Copia el archivo de entorno:
+    Laravel 10+
 
-    ```bash
-    cp .env.example .env
-    ```
+    Filament v3
 
-3. Levanta los servicios Docker:
+    PostgreSQL 15+
 
-    ```bash
-    docker-compose up -d --build
-    ```
+    Docker & Docker Compose
 
-4. Ingresa al contenedor de la app y termina la configuración:
+📦 Instalación rápida (desarrollo local con Docker)
 
-    ```bash
-    docker exec -it camisetas-app bash
-    composer install
-    php artisan key:generate
-    php artisan migrate
-    php artisan storage:link
-    ```
+    Clona el repositorio:
 
-5. Accede desde tu navegador:
-    - [http://localhost:8000](http://localhost:8000)
-    - [http://localhost:8000/admin](http://localhost:8000/admin) _(Panel de administración Filament)_
-    - User: <test@example.com>
-    - Password: password
+git clone <https://github.com/dariosjil13/Z-CAMISETA.git>
+cd Z-CAMISETA
 
----
+Copia el archivo de entorno:
 
-## ⚡ Comandos útiles
+cp .env.example .env
 
-- Parar y eliminar los servicios:
+Levanta los servicios Docker:
 
-    ```bash
-    docker-compose down
-    ```
+docker-compose up -d --build
 
-- Ver logs:
+Ingresa al contenedor de la app y termina la configuración:
 
-    ```bash
-    docker logs camisetas-app
-    ```
+docker exec -it laravel-app bash
+composer install
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
 
----
+Sincroniza las imágenes públicas (para pruebas locales):
 
-## 👨‍💻 Autores y colaboradores
+    Importante:
+    Las imágenes cargadas por los usuarios/admins NO se guardan en Git (por defecto, storage/app/public está en .gitignore).
 
-- **Oliver Aguilar**
-- **Maribel Arteaga**
-- **Juan Diego Escobar**
-- **Daniel Ospina**
-- **Yoseth Rivera**
+    Para que todos puedan ver las mismas imágenes de prueba, hay una carpeta compartida llamada resources/demo_images/.
+    Después de clonar el repo, copia el contenido así:
 
----
+        cp -r resources/demo_images/* storage/app/public/
 
-## 📄 Licencia
+        Si te pide sobreescribir archivos, acepta.
+
+        Si subes nuevas imágenes de prueba, recuerda agregar el archivo a resources/demo_images/ y haz commit para compartirlo.
+
+    Accede desde tu navegador:
+
+        http://localhost:8000
+
+        http://localhost:8000/admin (Panel de administración Filament)
+
+        User: admin@example.com
+
+        Password: password
+
+⚡ Comandos útiles
+
+    Parar y eliminar los servicios:
+
+docker-compose down
+
+Ver logs:
+
+    docker logs laravel-app
+
+👨‍💻 Autores y colaboradores
+
+    Oliver Aguilar
+
+    Maribel Arteaga
+
+    Juan Diego Escobar
+
+    Daniel Ospina
+
+    Yoseth Rivera
+
+📄 Licencia
 
 Este proyecto se distribuye bajo la licencia MIT.
-
----
