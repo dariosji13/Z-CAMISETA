@@ -1,4 +1,4 @@
-FROM php:8.2-cli
+FROM php:8.3-cli
 
 # Instalar dependencias del sistema necesarias para extensiones
 RUN apt-get update && apt-get install -y \
@@ -38,7 +38,7 @@ RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --ver
     cp .env.example .env && \
     php artisan key:generate && \
     php artisan migrate &&\
-    php artisan storage:link && \   
+    php artisan storage:link && \
     chmod -R 775 storage bootstrap/cache
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

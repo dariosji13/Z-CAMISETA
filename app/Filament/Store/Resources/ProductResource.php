@@ -47,8 +47,6 @@ class ProductResource extends Resource
                     ->icon('heroicon-m-shopping-cart')
                     ->color('primary')
                     ->action(function (Product $record) {
-                        // Aquí vamos a agregar la lógica de carrito
-                        // Por ahora sólo un debug simple:
                         session()->push('cart', $record->id);
                         Notification::make()
                             ->title("{$record->name} agregado al carrito")
