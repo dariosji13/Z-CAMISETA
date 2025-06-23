@@ -13,7 +13,6 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        // Buscar un usuario con rol admin que ya exista en la base
         $this->admin = User::where('email', 'admin@example.com')->firstOrFail();
     }
 
