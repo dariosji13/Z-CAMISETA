@@ -35,9 +35,10 @@ jobs:
 
       - name: Run migrations
         run: |
-          docker compose exec -T app cp .env-example .env
-          docker compose exec -T app php artisan key:generate
-          docker compose exec -T app php artisan migrate:fresh --seed --env=testing --force
+          docker compose exec -T laravel-app cp .env-example .env
+          docker compose exec -T laravel-app php artisan key:generate
+          docker compose exec -T laravel-app php artisan migrate:fresh --seed --env=testing --force
 
       - name: Run tests
-        run: docker compose exec -T app php artisan test --env=testing
+        run: docker compose exec -T laravel-app php artisan test --env=testing
+
