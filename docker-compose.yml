@@ -12,7 +12,8 @@ services:
     volumes:
       - .:/var/www
     depends_on:
-      - postgres_db
+      postgres_db:
+        condition: service_healthy
     networks:
       - laravel
 
@@ -20,12 +21,12 @@ services:
     image: postgres:15
     container_name: postgres_db
     restart: always
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: poligran2025
       POSTGRES_DB: z_camiseta
+    ports:
+      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
@@ -36,9 +37,9 @@ services:
       timeout: 5s
       retries: 10
 
+volumes:
+  db_data:
+
 networks:
   laravel:
     driver: bridge
-
-volumes:
-  db_data:

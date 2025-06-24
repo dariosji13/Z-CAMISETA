@@ -1,6 +1,6 @@
 FROM php:8.3-cli
 
-# Instalar dependencias del sistema necesarias para extensiones
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
     unzip \
     git \
@@ -11,35 +11,21 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
-     # Limpiar caché de apt aquí para reducir el tamaño de la imagen
 
-# Instalar extensiones de PHP
+# Instalar extensiones de PHP necesarias para Laravel
 RUN docker-php-ext-install intl zip pdo pdo_pgsql
 
-# Instalar Composer (desde la imagen oficial de Composer)
+# Instalar Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Crear directorio de trabajo
+# Directorio de trabajo dentro del contenedor
 WORKDIR /var/www
 
-COPY composer.json composer.lock* ./
-
-# Copiar todos los archivos al contenedor
+# Copiar archivos necesarios
 COPY . .
 
-# Instalar dependencias del proyecto Larave
-#RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --verbose
+# Instalar dependencias PHP sin requerir la plataforma del host
+RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist
 
-# Instalar dependencias y configurar permisos
-#RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist
-
-#Instalar dependencias y configurar permisos
-RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --verbose && \
-    cp .env-example .env && \
-    php artisan key:generate && \
-    php artisan storage:link && \
-    chmod -R 775 storage bootstrap/cache
-
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
-
-
+# Mantener el contenedor vivo en GitHub Actions
+CMD ["sleep", "infinity"]
