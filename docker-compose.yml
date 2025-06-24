@@ -16,23 +16,6 @@ services:
     networks:
       - laravel
 
-  jenkins:
-    build: 
-      context: .
-      dockerfile: Dockerfile.jenkins
-    user: root
-    ports:
-      - "8081:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - DOCKER_HOST=unix:///var/run/docker.sock
-    container_name: ci_jenkins
-    networks:
-      - laravel
-
   postgres_db:
     image: postgres:15
     container_name: postgres_db
@@ -54,5 +37,3 @@ networks:
 
 volumes:
   db_data:
-  jenkins_home:
-

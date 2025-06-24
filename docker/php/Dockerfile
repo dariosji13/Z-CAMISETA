@@ -35,9 +35,8 @@ COPY . .
 
 #Instalar dependencias y configurar permisos
 RUN composer install --ignore-platform-reqs --no-interaction --prefer-dist --verbose && \
-    cp .env.example .env && \
+    cp .env-example .env && \
     php artisan key:generate && \
-    php artisan migrate &&\
     php artisan storage:link && \
     chmod -R 775 storage bootstrap/cache
 
