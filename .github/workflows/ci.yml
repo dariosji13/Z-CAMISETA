@@ -26,7 +26,10 @@ jobs:
           docker compose exec -T postgres_db sh -c 'until pg_isready -U admin; do sleep 2; done'
           sleep 5
 
-      - name: Run migrations
+      - name: Install Composer dependencies
+        run: docker compose exec -T app composer install --ignore-platform-reqs --no-interaction --prefer-dist
+
+      - name: Run Laravel migrations
         run: |
           docker compose exec -T app cp .env-example .env
           docker compose exec -T app php artisan key:generate
